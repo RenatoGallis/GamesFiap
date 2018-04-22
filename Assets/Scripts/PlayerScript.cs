@@ -9,6 +9,7 @@ public class PlayerScript : MonoBehaviour {
 	Animator animator;
 	public GameObject player;
 	public Camera cam;
+	public int vida;
 
 	//Transform eh o unico  componente do Sensor (GameObject)
 	public Transform chaoVerificador;
@@ -18,6 +19,7 @@ public class PlayerScript : MonoBehaviour {
 	Rigidbody2D rb;
 	Vector3 posicaoInicialCamera;
 
+	float intervalo = 0.9f;
 	// Use this for initialization
 	void Start () {
 		//Interface para os componentes
@@ -38,12 +40,12 @@ public class PlayerScript : MonoBehaviour {
 		estaoNoChao = Physics2D.Linecast(transform.position, 
 			chaoVerificador.position, 
 			1 << LayerMask.NameToLayer("Piso"));
-		print (estaoNoChao);
+		//print (estaoNoChao);
 
 		//Pular
 		if (Input.GetButtonDown ("Jump") && estaoNoChao == true) {
-			rb.AddForce (Vector2.up * impulso);
-//			rb.velocity = new Vector2 (0.0f, impulso);
+			pular();
+//		 
 		}
 
 		//Orientacao
@@ -63,4 +65,45 @@ public class PlayerScript : MonoBehaviour {
 		//Camera
 		cam.transform.position = new Vector3(transform.position.x, cam.transform.position.y, cam.transform.position.z);
 	}
+
+	/*
+	void OnCollisionEnter2D(Collision2D c){
+		//Subtrai vida quando for atingido pelo projetil
+		if (c.gameObject.tag == "SubInimigo") {
+			vida--;
+			StartCoroutine (perdeSangue());
+			//personagem morre quando encerrar suas vidas
+			if (vida <= 0) {
+				Destroy (gameObject);
+			}
+		}
+	} */
+
+
+
+
+
+	void pular(){
+			rb.velocity = new Vector2 (0.0f, impulso);
+		}
+
+
+
+	IEnumerator perdeSangue(){
+
+
+		GetComponent<SpriteRenderer> ().enabled = false;
+		yield return new WaitForSeconds (intervalo);
+		GetComponent<SpriteRenderer> ().enabled = true;
+		yield return new WaitForSeconds (intervalo);
+		GetComponent<SpriteRenderer> ().enabled = false;
+		yield return new WaitForSeconds (intervalo);
+		GetComponent<SpriteRenderer> ().enabled = true;
+		yield return new WaitForSeconds (intervalo); 
+
+
+	}
+
+	
+
 }

@@ -18,7 +18,7 @@ public class InimigoScript : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D c){
 		//Subtrai vida quando for atingido pelo projetil
-		if (c.gameObject.tag == "Projetil") {
+		if (c.gameObject.tag == "projetil") {
 			vidas--;
 			//Destroi o inimigo quando encerrar as vidas
 			if (vidas <= 0) {

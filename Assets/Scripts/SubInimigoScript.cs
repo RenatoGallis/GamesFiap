@@ -13,18 +13,36 @@ public class SubInimigoScript : MonoBehaviour {
 	}
 		
 	void Update () {
+		
         // Persegue o alvo
         transform.position = Vector2.Lerp(
             transform.position, alvo.transform.position, 
             velocidade * Time.deltaTime
-            ); 
+            );
+
 	}
 
-	void OnTriggerEnter2D(Collider2D c){
-		print ("atingi o inimigo");
-		//como o peixinho eh trigger nao precisa colocar c.gameobject.tag
-		if (c.tag == "projetil") {
-			Destroy(c.gameObject);
+	void OnCollisionEnter2D(Collision2D c){
+		if (c.gameObject.tag == "projetil") {
+			Destroy (gameObject);
+			Destroy (c.gameObject);
+			}
 		}
 	}
-}
+
+
+	/*
+	void OnTriggerEnter2D(Collider2D c){
+		
+		//como o peixinho eh trigger nao precisa colocar c.gameobject.tag
+		if (c.gameObject.tag == "projetil") {
+			print ("passei aqui");
+			Destroy (gameObject);
+			Destroy(c.gameObject);
+
+		}
+	}*/
+
+
+		
+
